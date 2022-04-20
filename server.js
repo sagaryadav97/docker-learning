@@ -10,12 +10,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 async function main() {
-    await mongoose.connect("mongodb://admin:test@0.0.0.0:27017/test3?authSource=admin", {
+    await mongoose.connect("mongodb://mongo:27017/test3", {
         useNewUrlParser: true,
-        //  useUnifiedTopology: true 
+        useUnifiedTopology: true
     })
         .then(() => console.log('DB Connection Successfull'))
-        .catch(error => console.error(error));
+        .catch(error => console.error('db error',error));
 }
 
 
@@ -59,8 +59,10 @@ app.get("/title/:id", async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 })
-main()
 
+app.listen(3001, () => {
+    console.log('listening on 3001')
+    main()
 
-app.listen(3001)
+})
 
